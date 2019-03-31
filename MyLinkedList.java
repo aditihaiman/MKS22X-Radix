@@ -9,6 +9,11 @@ public class MyLinkedList {
     end = new MyNode(null);
   }
 
+  public void clear() {
+    length = 0;
+    start = new MyNode(null);
+    end = new MyNode(null);
+  }
 
   public int size() {
     return length;
