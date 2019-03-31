@@ -1,5 +1,5 @@
 public class MyLinkedList<E> {
-  private MyNode end, start;
+  private MyNode<E> end, start;
   private int length;
 
 
@@ -31,7 +31,7 @@ public class MyLinkedList<E> {
   }
 
   public boolean add(E value) {
-    MyNode newNode = new MyNode(value);
+    MyNode<E> newNode = new MyNode(value);
     if (length == 0) { //exception, if an empty list, then add inbetween start and end
       start.setNext(newNode);
       newNode.setNext(end);
@@ -51,7 +51,7 @@ public class MyLinkedList<E> {
   public String toString() {
     if (length == 0) return "[]"; //empty list exception
     String output = "[";
-    MyNode current = start.next();
+    MyNode<E> current = start.next();
     while (current.data() != null) { //loops through all nodes between start and end
       output += current.data() + ", ";
       current = current.next();
@@ -61,12 +61,12 @@ public class MyLinkedList<E> {
 
   public void add(int index, E value) {
     if (index < 0 || index > length) throw new IndexOutOfBoundsException();
-    MyNode current = start;
+    MyNode<E> current = start;
     if (index == length) add(value);
     else {
       for (int x = 0; x < length; x++) { //loops through, when it reaches the index specified, sets data to value
         if (x==index) {
-          MyNode newN = new MyNode(value, current.next(), current);
+          MyNode<E> newN = new MyNode(value, current.next(), current);
           current.setNext(newN);
           newN.next().setPrev(newN);
           current = current.next();
@@ -78,7 +78,7 @@ public class MyLinkedList<E> {
   }
 
   public E removeFront() {
-    MyNode node = start.next();
+    MyNode<E> node = start.next();
     start.setNext(node.next());
     node.next().setPrev(start);
     length--;
@@ -92,7 +92,7 @@ public class MyLinkedList<E> {
 
 public E remove(int index) {
   if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
-  MyNode node = getNthNode(index);
+  MyNode<E> node = getNthNode(index);
   node.prev().setNext(node.next());
   node.next().setPrev(node.prev());
   length--;
@@ -116,7 +116,7 @@ public E remove(int index) {
   }
 
   public boolean contains(E value) {
-    MyNode current = start.next();
+    MyNode<E> current = start.next();
     boolean output = false;
     for (int x = 0; x < length; x++) { //loops through list, if value exists then output is set to true
       if (current.data().equals(value)) output = true;
@@ -126,7 +126,7 @@ public E remove(int index) {
   }
 
   public int indexOf(E value) {
-    MyNode current = start.next();
+    MyNode<E> current = start.next();
     int output = -1;
     for (int x = 0; x < length; x++) {
       if (current.data().equals(value)) output = x;
@@ -141,9 +141,9 @@ public E remove(int index) {
 
 // -- Helper Method -- //
 //linear
-  private MyNode getNthNode(int index) { //private helper method to find node at an index
-    MyNode current = start.next();
-    MyNode output = current;
+  private MyNode<E> getNthNode(int index) { //private helper method to find node at an index
+    MyNode<E> current = start.next();
+    MyNode<E> output = current;
     for (int x = 0; x < length; x++) {
       if (x == index) {
         output = current;

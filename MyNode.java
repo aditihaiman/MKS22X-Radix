@@ -1,12 +1,12 @@
 public class MyNode<E> {
   private E data;
-  private MyNode next, prev;
+  private MyNode<E> next, prev;
 
   public MyNode(E num) {
     data = num;
   }
 
-  public MyNode(E num, MyNode nodeN, MyNode nodeP) {
+  public MyNode(E num, MyNode<E> nodeN, MyNode<E> nodeP) {
     data = num;
     next = nodeN;
     prev = nodeP;
@@ -14,11 +14,11 @@ public class MyNode<E> {
 
   // --- Methods are self-explanatory --- //
 
-  public void setNext(MyNode n) {
+  public void setNext(MyNode<E> n) {
     next = n;
   }
 
-  public void setPrev(MyNode p) {
+  public void setPrev(MyNode<E> p) {
     prev = p;
   }
 
@@ -28,11 +28,11 @@ public class MyNode<E> {
     return output;
   }
 
-  public MyNode next() {
+  public MyNode<E> next() {
     return next;
   }
 
-  public MyNode prev() {
+  public MyNode<E> prev() {
     return prev;
   }
 
