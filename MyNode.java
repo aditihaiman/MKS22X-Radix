@@ -1,12 +1,12 @@
-public class MyNode {
-  private Integer data;
+public class MyNode<E> {
+  private E data;
   private MyNode next, prev;
 
-  public MyNode(Integer num) {
+  public MyNode(E num) {
     data = num;
   }
 
-  public MyNode(Integer num, MyNode nodeN, MyNode nodeP) {
+  public MyNode(E num, MyNode nodeN, MyNode nodeP) {
     data = num;
     next = nodeN;
     prev = nodeP;
@@ -22,8 +22,8 @@ public class MyNode {
     prev = p;
   }
 
-  public Integer setData(Integer num) {
-    Integer output = data;
+  public E setData(E num) {
+    E output = data;
     data = num;
     return output;
   }
@@ -36,7 +36,7 @@ public class MyNode {
     return prev;
   }
 
-  public Integer data() {
+  public E data() {
     return data;
   }
 

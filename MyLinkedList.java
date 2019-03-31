@@ -1,4 +1,4 @@
-public class MyLinkedList {
+public class MyLinkedList<E> {
   private MyNode end, start;
   private int length;
 
@@ -15,11 +15,22 @@ public class MyLinkedList {
     end = new MyNode(null);
   }
 
-  public int size() {
-    return length;
+  public void extend(MyLinkedList<E> other) {
+    if (other.size()!=0) { //ignores case where other is empty
+      if (this.size()== 0) { //checks special case where this is empty
+        this.start.setNext(other.start.next());
+        other.start.next().setPrev(this.start);
+      }
+      else {
+        this.end.prev().setNext(other.start.next()); // combines the first and last elements
+        other.start.next().setPrev(this.end.prev()); // of the two lists
+      }
+      this.length+=other.length; //fixes lengths
+      other.length=0;
+    }
   }
 
-  public boolean add(Integer value) {
+  public boolean add(E value) {
     MyNode newNode = new MyNode(value);
     if (length == 0) { //exception, if an empty list, then add inbetween start and end
       start.setNext(newNode);
@@ -48,37 +59,7 @@ public class MyLinkedList {
     return output.substring(0, output.length()-2) + "]";
   }
 
-  public Integer get(int index) {
-    if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
-    return getNthNode(index).data();
-  }
-
-  public Integer set(int index, Integer value) {
-    if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
-    return getNthNode(index).setData(value);
-  }
-
-  public boolean contains(Integer value) {
-    MyNode current = start.next();
-    boolean output = false;
-    for (int x = 0; x < length; x++) { //loops through list, if value exists then output is set to true
-      if (current.data().equals(value)) output = true;
-      current = current.next();
-    }
-    return output;
-  }
-
-  public int indexOf(Integer value) {
-    MyNode current = start.next();
-    int output = -1;
-    for (int x = 0; x < length; x++) {
-      if (current.data().equals(value)) output = x;
-      current = current.next();
-    }
-    return output;
-  }
-
-  public void add(int index, Integer value) {
+  public void add(int index, E value) {
     if (index < 0 || index > length) throw new IndexOutOfBoundsException();
     MyNode current = start;
     if (index == length) add(value);
@@ -96,37 +77,67 @@ public class MyLinkedList {
     }
   }
 
-  public Integer remove(int index) {
-    if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
-    MyNode node = getNthNode(index);
-    node.prev().setNext(node.next());
-    node.next().setPrev(node.prev());
+  public E removeFront() {
+    MyNode node = start.next();
+    start.setNext(node.next());
+    node.next().setPrev(start);
     length--;
     return node.data();
   }
 
-  public boolean remove(Integer value){
+
+
+
+//--------------------- Unnecessary methods ---------------------//
+
+public E remove(int index) {
+  if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
+  MyNode node = getNthNode(index);
+  node.prev().setNext(node.next());
+  node.next().setPrev(node.prev());
+  length--;
+  return node.data();
+}
+
+  public boolean remove(E value){
     if (!contains(value)) return false;
     remove(indexOf(value));
     return true;
   }
 
-  public void extend(MyLinkedList other) {
-    if (other.size()!=0) { //ignores case where other is empty
-      if (this.size()== 0) { //checks special case where this is empty
-        this.start.setNext(other.start.next());
-        other.start.next().setPrev(this.start);
-      }
-      else {
-        this.end.prev().setNext(other.start.next()); // combines the first and last elements
-        other.start.next().setPrev(this.end.prev()); // of the two lists
-      }
-      this.length+=other.length; //fixes lengths
-      other.length=0;
-    }
+  public E get(int index) {
+    if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
+    return getNthNode(index).data();
   }
 
+  public E set(int index, E value) {
+    if (index < 0 || index >= length) throw new IndexOutOfBoundsException();
+    return getNthNode(index).setData(value);
+  }
 
+  public boolean contains(E value) {
+    MyNode current = start.next();
+    boolean output = false;
+    for (int x = 0; x < length; x++) { //loops through list, if value exists then output is set to true
+      if (current.data().equals(value)) output = true;
+      current = current.next();
+    }
+    return output;
+  }
+
+  public int indexOf(E value) {
+    MyNode current = start.next();
+    int output = -1;
+    for (int x = 0; x < length; x++) {
+      if (current.data().equals(value)) output = x;
+      current = current.next();
+    }
+    return output;
+  }
+
+  public int size() {
+    return length;
+  }
 
 // -- Helper Method -- //
 //linear
