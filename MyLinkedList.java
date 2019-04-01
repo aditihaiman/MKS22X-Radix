@@ -16,15 +16,23 @@ public class MyLinkedList<E> {
   }
 
   public void extend(MyLinkedList<E> other) {
+    System.out.println("B" + this);
     if (other.size()!=0) { //ignores case where other is empty
       if (this.size()== 0) { //checks special case where this is empty
         this.start.setNext(other.start.next());
         other.start.next().setPrev(this.start);
+        this.end.setPrev(other.end.prev());
+        other.end.prev().setNext(this.end);
         System.out.println("A");
       }
       else {
+        System.out.println("C" + this);
+        System.out.println("D" + other);
         this.end.prev().setNext(other.start.next()); // combines the first and last elements
         other.start.next().setPrev(this.end.prev()); // of the two lists
+        this.end.setPrev(other.end.prev());
+        other.end.prev().setNext(this.end);
+
       }
       this.length+=other.length; //fixes lengths
       other.length=0;
@@ -35,9 +43,9 @@ public class MyLinkedList<E> {
     MyNode<E> newNode = new MyNode(value);
     if (length == 0) { //exception, if an empty list, then add inbetween start and end
       start.setNext(newNode);
+      end.setPrev(newNode);
       newNode.setNext(end);
       newNode.setPrev(start);
-      end.setPrev(newNode);
     }
     else{ //else, add before end, after end.prev
       newNode.setPrev(end.prev());

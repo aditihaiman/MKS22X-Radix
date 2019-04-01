@@ -8,6 +8,13 @@ public class Driver {
     Radix.radixsort(test);
     System.out.println(Arrays.toString(test));
 
+    // MyLinkedList<Integer> a = new MyLinkedList<Integer>();
+    // MyLinkedList<Integer> b = new MyLinkedList<Integer>();
+    // a.add(3); b.add(24);
+    // System.out.println(a + " ; " + b);
+    // a.extend(b);
+    // System.out.println(a + " ; " + b);
+
   }
 
 

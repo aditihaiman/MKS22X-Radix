@@ -45,6 +45,7 @@ public class Radix {
   public static void extend(MyLinkedList<Integer> data1, ArrayList<MyLinkedList<Integer>> bucket) {
     data1.clear();
     for(int x = 0; x < bucket.size(); x++) {
+      System.out.println("W" + data1);
       data1.extend(bucket.get(x));
     }
   }
