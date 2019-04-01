@@ -20,6 +20,7 @@ public class MyLinkedList<E> {
       if (this.size()== 0) { //checks special case where this is empty
         this.start.setNext(other.start.next());
         other.start.next().setPrev(this.start);
+        System.out.println("A");
       }
       else {
         this.end.prev().setNext(other.start.next()); // combines the first and last elements

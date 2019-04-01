@@ -3,20 +3,22 @@ import java.io.*;
 
 public class Radix {
 
-  public void radixsort(int[] data) {
+  public static void radixsort(int[] data) {
     int max = getMax(data);
-    MyLinkedList<Integer>[] buckets = new MyLinkedList[10];
+    ArrayList<MyLinkedList<Integer>> buckets = new ArrayList<MyLinkedList<Integer>>();
+    for(int x = 0; x < 10; x++){
+      buckets.add(new MyLinkedList<Integer>());
+    }
     MyLinkedList<Integer> data1 = new MyLinkedList<Integer>();
     copy(data, data1);
-    for(int x = max; x > 0; x /= 10) {
-      int digits = 0;
+    for(int x = 0; Math.abs(max/10^x) > 0; x++) {
       for(int y = 0; y < data.length; y++) {
-        buckets[(data1.get(y)/(10^digits))%10].add(data1.get(y));
+        buckets.get((int)(data1.get(y)/Math.pow(10, x)%10)).add(data1.get(y));
+        System.out.println(buckets);
       }
-      digits++;
       extend(data1, buckets);
     }
-
+    copy2(data, data1);
 
   }
 
@@ -34,12 +36,16 @@ public class Radix {
     }
   }
 
-  public static void copy2()
+  public static void copy2(int[] data, MyLinkedList<Integer> data1) {
+    for(int x = 0; x < data.length; x++) {
+      data[x]=data1.get(x);
+    }
+  }
 
-  public static void extend(MyLinkedList<Integer> data1, MyLinkedList<Integer>[] bucket) {
+  public static void extend(MyLinkedList<Integer> data1, ArrayList<MyLinkedList<Integer>> bucket) {
     data1.clear();
-    for(int x = 0; x < bucket.length; x++) {
-      data1.extend(bucket[x]);
+    for(int x = 0; x < bucket.size(); x++) {
+      data1.extend(bucket.get(x));
     }
   }
 
