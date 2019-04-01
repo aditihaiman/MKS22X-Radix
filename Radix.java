@@ -14,7 +14,7 @@ public class Radix {
     for(int x = 0; Math.abs(max/10^x) > 0; x++) {
       for(int y = 0; y < data.length; y++) {
         buckets.get((int)(data1.get(y)/Math.pow(10, x)%10)).add(data1.get(y));
-        System.out.println(buckets);
+        //System.out.println(buckets);
       }
       extend(data1, buckets);
     }
@@ -45,7 +45,6 @@ public class Radix {
   public static void extend(MyLinkedList<Integer> data1, ArrayList<MyLinkedList<Integer>> bucket) {
     data1.clear();
     for(int x = 0; x < bucket.size(); x++) {
-      System.out.println("W" + data1);
       data1.extend(bucket.get(x));
     }
   }
