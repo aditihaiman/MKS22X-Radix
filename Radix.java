@@ -5,21 +5,28 @@ public class Radix {
 
   public static void radixsort(int[] data) {
     int max = getMax(data);
-    ArrayList<MyLinkedList<Integer>> buckets = new ArrayList<MyLinkedList<Integer>>();
-    for(int x = 0; x < 10; x++){
-      buckets.add(new MyLinkedList<Integer>());
+    MyLinkedList<Integer>[] buckets = new MyLinkedList[20];
+    for(int x = 0; x < buckets.length; x++){
+      buckets[x] = new MyLinkedList<Integer>();
     }
     MyLinkedList<Integer> data1 = new MyLinkedList<Integer>();
-    copy(data, data1);
-    for(int x = 0; Math.abs(max/10^x) > 0; x++) {
-      for(int y = 0; y < data.length; y++) {
-        buckets.get((int)(data1.get(y)/Math.pow(10, x)%10)).add(data1.get(y));
-        //System.out.println(buckets);
+    copy(data, data1); //copy original to new linked list
+    for(int x = 0; Math.abs(max/10^x) > 0; x++) { //loops through for each digit
+      while(data1.size()>0) {
+        int temp = data1.removeFront();
+        if(temp>=0) {
+          buckets[(int)(temp/Math.pow(10, x)%10)].add(temp); //adds each number to appropriate bucket
+        }
+        else{
+          temp*=-1;
+          buckets[(int)(temp/Math.pow(10, x)%10) + 10].add(temp*-1);
+        }
       }
-      extend(data1, buckets);
-    }
-    copy2(data, data1);
+      if(Math.abs(max/10^(x+1)) > 0) extend(data1, buckets);
+      else extend2(data1, buckets);
 
+    }
+    copy2(data, data1); //copy buckets back to original
   }
 
   public static int getMax(int[] data) {
@@ -42,11 +49,20 @@ public class Radix {
     }
   }
 
-  public static void extend(MyLinkedList<Integer> data1, ArrayList<MyLinkedList<Integer>> bucket) {
-    data1.clear();
-    for(int x = 0; x < bucket.size(); x++) {
-      data1.extend(bucket.get(x));
+  public static void extend(MyLinkedList<Integer> data1, MyLinkedList<Integer>[] bucket) {
+    for(int x = 0; x < bucket.length; x++) {
+      data1.extend(bucket[x]);
     }
   }
+
+  public static void extend2(MyLinkedList<Integer> data1, MyLinkedList<Integer>[] bucket) {
+    for(int x = 19; x > 9; x--){
+      data1.extend(bucket[x]);
+    }
+    for(int x = 0; x < 10; x++) {
+      data1.extend(bucket[x]);
+    }
+  }
+
 
 }
