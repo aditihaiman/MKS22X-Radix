@@ -12,7 +12,7 @@ public class Radix {
     }
     MyLinkedList<Integer> data1 = new MyLinkedList<Integer>();
     copy(data, data1); //copy original to new linked list
-    for(int x = 0; Math.abs(max/10^x) > 0; x++) { //loops through for each digit
+    for(int x = 0; x < max; x++) { //loops through for each digit
       while(data1.size()>0) {
         int temp = data1.removeFront();
         //System.out.println("A");
@@ -25,8 +25,8 @@ public class Radix {
           buckets[(int)(temp/Math.pow(10, x)%10) + 10].add(temp*-1);
         }
       }
-      if(Math.abs(max/10^(x+1)) > 0) extend(data1, buckets);
-      else extend2(data1, buckets);
+      if(x+1 == max) extend2(data1, buckets);
+      else extend(data1, buckets);
 
     }
     copy2(data, data1); //copy buckets back to original
