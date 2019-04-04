@@ -2,12 +2,13 @@ import java.util.*;
 import java.io.*;
 
 public class Radix {
+  private static int BASE = 1000;
 
   public static void radixsort(int[] data) {
-    int max = getDigits(getMax(data));
-    int min = getMin(data);
-    //System.out.println(max);
-    MyLinkedList<Integer>[] buckets = new MyLinkedList[20];
+    int temp1[] = getMaxMin(data); //get max an min
+    int max = getDigits(temp1[0] - temp1[1]); //digits of largest number
+    int min = temp1[1];
+    MyLinkedList<Integer>[] buckets = new MyLinkedList[BASE];
     for(int x = 0; x < buckets.length; x++){
       buckets[x] = new MyLinkedList<Integer>();
     }
@@ -16,18 +17,8 @@ public class Radix {
     for(int x = 0; x < max; x++) { //loops through for each digit
       while(data1.size()>0) {
         int temp = data1.removeFront();
-        //temp = temp / (int)Math.pow(10, x);
-        //System.out.println("A");
-        //if(temp>=0) {
-        buckets[(int)(temp/Math.pow(10, x)%10)].add(temp); //adds each number to appropriate bucket
-        //}
-        // else{
-        //   temp*=-1;
-        //   buckets[(int)(temp/Math.pow(10, x)%10) + 10].add(temp*-1);
-        // }
+        buckets[(int)(temp/Math.pow(BASE, x)%BASE)].add(temp); //adds each number to appropriate bucket
       }
-      //if(x+1 == max) extend2(data1, buckets);
-      //else extend(data1, buckets);
       extend(data1, buckets);
 
     }
@@ -42,18 +33,22 @@ public class Radix {
     return min;
   }
 
-  public static int getMax(int[] data) {
-    int max = 0;
+  public static int[] getMaxMin(int[] data) {
+    int output[] = new int[2];
+    int max = data[0], min = data[0];
     for(int x = 0; x < data.length; x++) {
-      if(Math.abs(data[x]) > max) max = Math.abs(data[x]);
+      if(data[x] > max) max = data[x];
+      if(data[x] < min) min = data[x];
     }
-    return max;
+    output[0] = max;
+    output[1] = min;
+    return output;
   }
 
   public static int getDigits(int max){
     if (max==0) return 1;
     int count = 0;
-    for(int x = max; max > 0; max/=10){
+    for(int x = max; max > 0; max/=BASE){
       count++;
     }
     return count;
