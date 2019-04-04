@@ -37,7 +37,7 @@ public static void main(String[]args){
   System.out.println(Radix.getDigits(0));
 
     System.out.println("Size\t\tMax Value\tquick/builtin ratio ");
-    int[] MAX_LIST = {100,500,100000000};
+    int[] MAX_LIST = {10,500,100000000};
     for(int MAX : MAX_LIST){
       for(int size = 5000; size < 2000001; size*=2){
         long qtime=0;

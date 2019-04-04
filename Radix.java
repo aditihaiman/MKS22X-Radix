@@ -5,31 +5,41 @@ public class Radix {
 
   public static void radixsort(int[] data) {
     int max = getDigits(getMax(data));
+    int min = getMin(data);
     //System.out.println(max);
     MyLinkedList<Integer>[] buckets = new MyLinkedList[20];
     for(int x = 0; x < buckets.length; x++){
       buckets[x] = new MyLinkedList<Integer>();
     }
     MyLinkedList<Integer> data1 = new MyLinkedList<Integer>();
-    copy(data, data1); //copy original to new linked list
+    copy(data, data1, min); //copy original to new linked list
     for(int x = 0; x < max; x++) { //loops through for each digit
       while(data1.size()>0) {
         int temp = data1.removeFront();
+        //temp = temp / (int)Math.pow(10, x);
         //System.out.println("A");
-
-        if(temp>=0) {
+        //if(temp>=0) {
           buckets[(int)(temp/Math.pow(10, x)%10)].add(temp); //adds each number to appropriate bucket
-        }
-        else{
-          temp*=-1;
-          buckets[(int)(temp/Math.pow(10, x)%10) + 10].add(temp*-1);
-        }
+        //}
+        // else{
+        //   temp*=-1;
+        //   buckets[(int)(temp/Math.pow(10, x)%10) + 10].add(temp*-1);
+        // }
       }
-      if(x+1 == max) extend2(data1, buckets);
-      else extend(data1, buckets);
+      //if(x+1 == max) extend2(data1, buckets);
+      //else extend(data1, buckets);
+      extend(data1, buckets);
 
     }
-    copy2(data, data1); //copy buckets back to original
+    copy2(data, data1, min); //copy buckets back to original
+  }
+
+  public static int getMin(int[] data){
+    int min = data[0];
+    for(int x = 1; x < data.length; x++){
+      if(data[x] < min) min = data[x];
+    }
+    return min;
   }
 
   public static int getMax(int[] data) {
@@ -49,15 +59,15 @@ public class Radix {
     return count;
   }
 
-  public static void copy(int[] data, MyLinkedList<Integer> data1) {
+  public static void copy(int[] data, MyLinkedList<Integer> data1, int min) {
     for(int x = 0; x < data.length; x++) {
-      data1.add(data[x]);
+      data1.add(data[x] - min);
     }
   }
 
-  public static void copy2(int[] data, MyLinkedList<Integer> data1) {
+  public static void copy2(int[] data, MyLinkedList<Integer> data1, int min) {
     for(int x = 0; x < data.length; x++) {
-      data[x]=data1.get(x);
+      data[x]=data1.removeFront() + min;
     }
   }
 
@@ -75,6 +85,9 @@ public class Radix {
       data1.extend(bucket[x]);
     }
   }
+
+
+
 
 
 }
