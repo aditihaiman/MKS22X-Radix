@@ -19,7 +19,7 @@ public class Radix {
         //temp = temp / (int)Math.pow(10, x);
         //System.out.println("A");
         //if(temp>=0) {
-          buckets[(int)(temp/Math.pow(10, x)%10)].add(temp); //adds each number to appropriate bucket
+        buckets[(int)(temp/Math.pow(10, x)%10)].add(temp); //adds each number to appropriate bucket
         //}
         // else{
         //   temp*=-1;
@@ -59,13 +59,13 @@ public class Radix {
     return count;
   }
 
-  public static void copy(int[] data, MyLinkedList<Integer> data1, int min) {
+  public static void copy(int[] data, MyLinkedList<Integer> data1, int min) { //copy original to linked list
     for(int x = 0; x < data.length; x++) {
       data1.add(data[x] - min);
     }
   }
 
-  public static void copy2(int[] data, MyLinkedList<Integer> data1, int min) {
+  public static void copy2(int[] data, MyLinkedList<Integer> data1, int min) { //copy linked list back to original
     for(int x = 0; x < data.length; x++) {
       data[x]=data1.removeFront() + min;
     }
@@ -73,15 +73,6 @@ public class Radix {
 
   public static void extend(MyLinkedList<Integer> data1, MyLinkedList<Integer>[] bucket) {
     for(int x = 0; x < bucket.length; x++) {
-      data1.extend(bucket[x]);
-    }
-  }
-
-  public static void extend2(MyLinkedList<Integer> data1, MyLinkedList<Integer>[] bucket) {
-    for(int x = 19; x > 9; x--){
-      data1.extend(bucket[x]);
-    }
-    for(int x = 0; x < 10; x++) {
       data1.extend(bucket[x]);
     }
   }
